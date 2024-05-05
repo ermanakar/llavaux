@@ -1,0 +1,16 @@
+/* Subtitle.css */
+.subtitle {
+  margin: 24px auto 0;
+  padding: 0 0 40px 0;
+  width: 80%;
+  text-align: center;
+  font-size: 1.75rem;
+  color: white;
+  letter-spacing: 0.5px; /* Slightly increased letter-spacing for better readability */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
+  transition: text-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.subtitle:hover {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75); /* Enhanced shadow on hover for more emphasis */
+}

@@ -1,0 +1,17 @@
+/* Title.css */
+.title {
+  margin: 0 auto;
+  padding: 0;
+  text-transform: uppercase;
+  width: 90%;
+  text-align: center;
+  font-size: 3.5rem; /* Large size to make the title prominent */
+  color: white; /* Corrected property from color-scheme to color */
+  letter-spacing: 1px; /* Adding some letter spacing for better readability */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow around text for depth */
+  transition: text-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.title:hover {
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.75); /* Enhanced shadow on hover for more emphasis */
+}

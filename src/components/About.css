@@ -1,0 +1,140 @@
+.about-page {
+    padding: 80px 20px;
+    text-align: center;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-light);
+}
+
+.about-intro h1, .portfolio h2, .team h2 {
+    color: var(--text-color);
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.about-intro p, .portfolio p, .team p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.portfolio-items {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.portfolio-item {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+    padding: 20px;
+    background-color: var(--background-light);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden; /* Ensures no overflow from large background icons */
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.icon-background {
+    position: absolute;
+    font-size: 10rem; /* Adjust size to fit the card */
+    color: rgba(255, 255, 255, 0.1); /* Light white, transparent */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Prevents the icon from interfering with clicks */
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: var(--link-hover-color);
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+}
+
+.profile-photo {
+    margin-right: 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.member-info {
+    text-align: left;
+    flex: 1;
+}
+
+.social-media-links a {
+    margin: 0 10px;
+    color: var(--primary-color);
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.social-media-links a:hover {
+    color: var(--link-hover-color);
+}
+
+@media (max-width: 768px) {
+    .portfolio-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .portfolio-item {
+        width: 90%;
+        height: auto;
+    }
+
+    .team-member {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-photo {
+        margin-bottom: 20px;
+    }
+
+    .member-info {
+        text-align: center;
+    }
+}

@@ -1,0 +1,20 @@
+/* Footer.css */
+.site-footer {
+  background-color: var(--background-dark); /* Using variable for background */
+  color: #fff;
+  padding: 1rem 2rem;
+  text-align: center;
+  width: 100%; /* Ensure it spans the full width of its container */
+}
+
+.site-footer a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.site-footer .legal p {
+  font-size: var(--font-size-small); /* Consistent font size using variables */
+  margin-top: 1rem;
+  color: var(--secondary-color);
+}

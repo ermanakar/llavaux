@@ -1,5 +1,12 @@
+/* App.css */
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-rows: 1fr auto; /* 1fr for content, auto for footer */
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1; /* This ensures that the main content expands to fill available space */
 }
 
 .App-logo {

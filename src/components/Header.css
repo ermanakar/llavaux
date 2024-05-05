@@ -1,0 +1,45 @@
+.site-header {
+    background-color: var(--background-light);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.site-logo {
+    height: 50px; /* Adjust size as needed */
+    transition: transform 0.3s ease-in-out;
+}
+
+.site-logo:hover {
+    transform: scale(1.1); /* Subtle grow effect */
+}
+
+.navigation {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation li {
+    padding: 0 15px;
+}
+
+.navigation a {
+    color: var(--text-color); /* Using global variable for text color */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navigation a:hover, .navigation a:focus {
+    color: var(--primary-color); /* Bright blue for hover state, using global variable */
+    text-decoration: underline;
+}
