@@ -1,37 +1,59 @@
-import React, { useState } from 'react';
-import Header from './Header'; 
-import './Exhibition.css'; 
+import React, { useEffect, useState, useCallback } from 'react';
+import io from 'socket.io-client';
+import Header from './Header';
+import './Exhibition.css';
+
+type ImageData = {
+    iteration: number;
+    image_url: string;
+    description: string;
+};
 
 const ExhibitionPage: React.FC = () => {
-    const totalIterations = 10;
-    const [currentIteration, setCurrentIteration] = useState(totalIterations);
-    const [imageData, setImageData] = useState({
-        imageUrl: 'https://via.placeholder.com/800', // Use a placeholder image
-        description: `Description for iteration ${currentIteration}`
-    });
+    const [images, setImages] = useState<ImageData[]>([]);
+    const [currentIteration, setCurrentIteration] = useState<number>(1);
 
-    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const iterationNumber = parseInt(event.target.value, 10);
-        setCurrentIteration(iterationNumber);
-        setImageData({
-            imageUrl: 'https://via.placeholder.com/800', // Keep using the placeholder for all iterations for now
-            description: `Description for iteration ${iterationNumber}`
-        });
-    };
+    useEffect(() => {
+        const socket = io('http://localhost:5001');
+
+        const handleNewImage = (data: ImageData) => {
+            setImages(prevImages => [...prevImages, data]);
+            setCurrentIteration(data.iteration);  // Update to show the newest image
+        };
+
+        socket.on('update_image', handleNewImage);
+
+        return () => {
+            socket.off('update_image', handleNewImage);
+            socket.disconnect();
+        };
+    }, []);
+
+    const handleThumbnailClick = useCallback((iteration: number) => {
+        setCurrentIteration(iteration);
+    }, []);
 
     return (
         <>
             <Header />
             <div className="exhibition-page">
                 <div className="image-stage">
-                    <img src={imageData.imageUrl} alt={`Iteration ${currentIteration}`} />
-                    <p className="image-description">{imageData.description}</p>
+                    {images.length > 0 ? (
+                        <img src={images.find(img => img.iteration === currentIteration)?.image_url || 'https://via.placeholder.com/600'} 
+                             alt={`Iteration ${currentIteration}`} />
+                    ) : (
+                        <img src="https://via.placeholder.com/600" alt="Waiting for images..." />
+                    )}
+                    <p className="image-description">
+                        {images.find(img => img.iteration === currentIteration)?.description || 'Waiting for image descriptions...'}
+                    </p>
                     <div className="iteration-number">Iteration: {currentIteration}</div>
                 </div>
                 <div className="slider-container">
-                    {Array.from({ length: totalIterations }, (_, index) => (
-                        <button key={index} className={`thumbnail ${index + 1 === currentIteration ? 'active' : ''}`} onClick={() => handleSliderChange({ target: { value: index + 1 } } as any)}>
-                            <img src="https://via.placeholder.com/100" alt={`Thumb ${index + 1}`} />
+                    {images.map((img, index) => (
+                        <button key={index} className={`thumbnail ${img.iteration === currentIteration ? 'active' : ''}`} 
+                                onClick={() => handleThumbnailClick(img.iteration)}>
+                            <img src={img.image_url} alt={`Thumb ${img.iteration}`} />
                         </button>
                     ))}
                 </div>

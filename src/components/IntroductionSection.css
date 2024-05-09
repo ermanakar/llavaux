@@ -1,7 +1,7 @@
 /* IntroductionSection.css */
 .introduction-section {
   padding: 4rem;
-  overflow-x: hidden; /* Prevent horizontal scrolling on smaller devices */
+  overflow-x: hidden;
   background: var(--background-light);
   font-family: 'Outfit', sans-serif;
   color: var(--text-color);
@@ -9,8 +9,8 @@
 
 .timeline {
   display: flex;
-  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
-  justify-content: center; /* Centers items when they wrap */
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   padding: 1rem 0;
 }
@@ -24,7 +24,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 230px; /* Consider making this a percentage or max-width for responsiveness */
+  width: 230px;
   cursor: pointer;
 }
 
@@ -38,7 +38,32 @@
   height: 80px;
   border-radius: 50%;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 3px solid #eee;
+  overflow: hidden;
+  background: var(--background-light);
+  color: var(--primary-color);
+}
+
+.timeline-avatar svg {
+  width: 70%;
+  height: auto;
+  transition: transform 0.5s ease-in-out;
+}
+
+.timeline-avatar:hover svg {
+  animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
 }
 
 .timeline-content {
