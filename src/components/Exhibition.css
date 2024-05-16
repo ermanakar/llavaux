@@ -12,10 +12,10 @@
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     position: relative;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     overflow: hidden;
     transition: box-shadow 0.3s ease;
   }
@@ -102,20 +102,30 @@
     border-color: #007bff;
   }
   
-  /* Responsive adjustments for mobile view */
+  .exhibition-page__waiting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+    background: #f0f0f0;
+    color: #888;
+    font-size: 1.2em;
+  }
+  
   @media (max-width: 768px) {
     .exhibition-page__image-stage {
       width: 100%;
       max-width: 100%;
-      margin-top: -80px; /* Adjust top margin to overlay the header */
+      margin-top: -80px;
       height: 100vh;
       max-height: 100vh;
-      border-radius: 0; /* Full width images on mobile should not have rounded corners */
+      border-radius: 0;
     }
   
     .exhibition-page__image-stage img {
       min-height: 100vh;
-      object-fit: cover; /* Ensure the image covers the full screen */
+      object-fit: cover;
     }
   
     .exhibition-page {
@@ -124,76 +134,75 @@
     }
   
     .exhibition-page__slider-container {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-      padding: 10px 5px;
-      box-sizing: border-box;
-      transform: translateY(100px); /* Start offscreen */
-      transition: transform 0.3s ease-in-out;
-      z-index: 10; /* Ensure it's above other content */
-      display: flex;
-      overflow-x: auto;
-      gap: 5px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 10px 5px;
+        box-sizing: border-box;
+        transform: translateY(100px);
+        transition: transform 0.3s ease-in-out;
+        z-index: 10;
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+      }
+    
+      .exhibition-page__thumbnail img {
+        width: 60px;
+      }
+    
+      .exhibition-page__thumbnail {
+        width: 60px;
+        flex: 0 0 60px;
+        padding: 5px;
+      }
+    
+      .exhibition-page__image-description {
+        font-size: 14px;
+        padding: 8px 16px;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+        transition: opacity 0.3s ease;
+      }
+    
+      .exhibition-page__iteration-number {
+        font-size: 12px;
+        padding: 4px 8px;
+        top: 5px;
+        right: 5px;
+      }
+    
+      .exhibition-page__slider-container.active {
+        transform: translateY(0);
+      }
     }
-  
-    .exhibition-page__thumbnail img {
-      width: 60px; /* Adjust thumbnail size on mobile */
-  }
-
-  .exhibition-page__thumbnail {
-    width: 60px; /* Ensure consistency in thumbnail container size */
-    flex: 0 0 60px; /* Avoid flexbox shrinking items */
-    padding: 5px; /* Reduce padding to fit smaller screens */
-  }
-
-  .exhibition-page__image-description {
-    font-size: 14px; /* Adjust font size for better readability on small screens */
-    padding: 8px 16px; /* Adjust padding to ensure text fits well */
-    position: absolute;
-    bottom: 0;
-    text-align: center; /* Ensure text is centered for aesthetics */
-    background: rgba(0, 0, 0, 0.8); /* Enhance background for readability */
-    transition: opacity 0.3s ease; /* Smooth transition for showing and hiding */
-  }
-
-  .exhibition-page__iteration-number {
-    font-size: 12px; /* Adjust font size for iteration number */
-    padding: 4px 8px; /* Adjust padding to keep design uniform */
-    top: 5px; /* Adjust position to fit better on screen */
-    right: 5px; /* Maintain consistent spacing from the edge */
-  }
-
-  /* Show and hide thumbnails panel */
-  .exhibition-page__slider-container.active {
-    transform: translateY(0); /* Slide in animation for thumbnail container */
-  }
-}
-
-@media (max-width: 480px) {
-  .exhibition-page__image-stage {
-    margin-top: -60px; /* Adjust top margin to overlay the header more on very small screens */
-  }
-
-  .exhibition-page__image-description {
-    font-size: 12px; /* Reduce font size slightly on very small screens */
-    padding: 6px 12px; /* Adjust padding to fit smaller screens */
-  }
-
-  .exhibition-page__thumbnail img {
-    width: 50px; /* Further reduce thumbnail image size for smaller screens */
-  }
-
-  .exhibition-page__thumbnail {
-    width: 50px; /* Reduce thumbnail button size on smaller screens */
-    flex: 0 0 50px; /* Avoid flexbox shrinking items */
-    margin: 2px; /* Reduce margin to use space more efficiently */
-  }
-
-  .exhibition-page__iteration-number {
-    font-size: 10px; /* Reduce font size for iteration number on smaller screens */
-    padding: 3px 6px; /* Adjust padding to keep design consistent */
-  }
-}
+    
+    @media (max-width: 480px) {
+      .exhibition-page__image-stage {
+        margin-top: -60px;
+      }
+    
+      .exhibition-page__image-description {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    
+      .exhibition-page__thumbnail img {
+        width: 50px;
+      }
+    
+      .exhibition-page__thumbnail {
+        width: 50px;
+        flex: 0 0 50px;
+        margin: 2px;
+      }
+    
+      .exhibition-page__iteration-number {
+        font-size: 10px;
+        padding: 3px 6px;
+      }
+    }

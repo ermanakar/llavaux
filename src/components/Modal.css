@@ -6,9 +6,9 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+    align-items: center;  /* Vertically center the modal */
+    justify-content: center; /* Horizontally center the modal */
+    z-index: 1500; /* Make sure this is above all other content */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -36,17 +36,7 @@
     transform: scale(1);
 }
 
-.modal-close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.modal-nav-button {
+.modal-close-button, .modal-nav-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -54,7 +44,11 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #333;
+}
+
+.modal-close-button {
+    top: 10px;
+    right: 10px;
 }
 
 .modal-nav-button.left {
@@ -65,9 +59,16 @@
     right: 10px;
 }
 
-/* Ensure modals are responsive */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+    .modal-overlay {
+        align-items: flex-start; /* Adjust vertical alignment to avoid overlap with footer */
+        padding-top: 20px; /* Add padding to ensure modal doesn't touch the very top */
+    }
+
     .modal-content {
-        width: 90%;
+        width: 90%; /* Make modal wider to use more screen space */
+        height: auto; /* Adjust height dynamically */
+        max-height: 80vh; /* Limit maximum height to avoid touching footer */
     }
 }

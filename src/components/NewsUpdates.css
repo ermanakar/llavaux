@@ -43,13 +43,13 @@
 }
 
 .news-updates li article h3 {
-  color: #34495e;
+  color: var(--text-color);
   margin-bottom: 0.5rem;
 }
 
 .news-updates li article p {
   font-size: 1rem;
-  color: #555;
+  color: var(--text-color);
   margin-bottom: 0.5rem;
   max-height: 0;
   overflow: hidden;

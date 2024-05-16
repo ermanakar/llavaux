@@ -19,15 +19,14 @@ const ExhibitionPage: React.FC = () => {
   const [isThumbnailPanelOpen, setIsThumbnailPanelOpen] = useState(false);
   const socket = useRef<Socket | null>(null);
 
-  // Swipe detection settings
-  const swipeThreshold = 50; // Minimum distance (in pixels) for a swipe gesture
+  const swipeThreshold = 50;
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:5001');
     socket.current.on('update_image', (data: ImageData) => {
-      setImages(prevImages => [...prevImages, data]);
+      setImages((prevImages) => [...prevImages, data]);
       setCurrentIteration(data.iteration);
     });
 
@@ -39,22 +38,18 @@ const ExhibitionPage: React.FC = () => {
   const handleThumbnailClick = (iteration: number) => {
     if (iteration > 0 && iteration <= images.length) {
       setCurrentIteration(iteration);
-      setIsThumbnailPanelOpen(false); // Close the thumbnail panel on selection
+      setIsThumbnailPanelOpen(false);
     }
   };
 
-  const toggleDescription = () => {
-    setIsDescriptionExpanded(prev => !prev);
-  };
+  const toggleDescription = () => setIsDescriptionExpanded((prev) => !prev);
+  const toggleThumbnailPanel = () => setIsThumbnailPanelOpen((prev) => !prev);
 
-  const toggleThumbnailPanel = () => {
-    setIsThumbnailPanelOpen(prev => !prev);
-  };
-
-  const currentImage = images.find(img => img.iteration === currentIteration);
   const getDescription = (description?: string) => {
     if (!description) return 'No description available';
-    return isDescriptionExpanded || description.length <= 150 ? description : `${description.substring(0, 150)}...`;
+    return isDescriptionExpanded || description.length <= 150
+      ? description
+      : `${description.substring(0, 150)}...`;
   };
 
   const handleSwipe = (direction: 'left' | 'right') => {
@@ -65,22 +60,11 @@ const ExhibitionPage: React.FC = () => {
     }
   };
 
-  // Detect swipe gesture
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-    setTouchEnd(0); // Reset previous touch end position
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
-    if (touchStart - touchEnd > swipeThreshold) {
-      handleSwipe('left');
-    } else if (touchEnd - touchStart > swipeThreshold) {
-      handleSwipe('right');
-    }
+    if (touchStart - touchEnd > swipeThreshold) handleSwipe('left');
+    else if (touchEnd - touchStart > swipeThreshold) handleSwipe('right');
   };
 
   const renderThumbnail = (img: ImageData) => (
@@ -95,6 +79,8 @@ const ExhibitionPage: React.FC = () => {
     </button>
   );
 
+  const currentImage = images.find((img) => img.iteration === currentIteration);
+
   return (
     <>
       <Header />
@@ -106,25 +92,30 @@ const ExhibitionPage: React.FC = () => {
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          <img
-            src={currentImage?.image_url || 'https://via.placeholder.com/500'}
-            alt={`Iteration ${currentIteration}`}
-          />
-          <div className="exhibition-page__image-description" onClick={toggleDescription}>
-            {getDescription(currentImage?.description)}
-            {currentImage?.description && currentImage.description.length > 150 && (
-              <span className="exhibition-page__read-more">{isDescriptionExpanded ? 'Read less' : 'Read more'}</span>
-            )}
-          </div>
-          <div className="exhibition-page__iteration-number">
-            Iteration: {currentIteration}
-          </div>
+          {currentImage ? (
+            <>
+              <img src={currentImage.image_url} alt={`Iteration ${currentIteration}`} />
+              <div className="exhibition-page__image-description" onClick={toggleDescription}>
+                {getDescription(currentImage.description)}
+                {currentImage.description.length > 150 && (
+                  <span className="exhibition-page__read-more">
+                    {isDescriptionExpanded ? 'Read less' : 'Read more'}
+                  </span>
+                )}
+              </div>
+              <div className="exhibition-page__iteration-number">
+                Iteration: {currentIteration}
+              </div>
+            </>
+          ) : (
+            <div className="exhibition-page__waiting">
+              Waiting for images...
+            </div>
+          )}
         </div>
         <div
-          className={classnames('exhibition-page__slider-container', {
-            'active': isThumbnailPanelOpen,
-          })}
-          onClick={e => e.stopPropagation()} // Prevents the slider container from propagating click to the image stage
+          className={classnames('exhibition-page__slider-container', { active: isThumbnailPanelOpen })}
+          onClick={(e) => e.stopPropagation()}
         >
           {images.map(renderThumbnail)}
         </div>
@@ -135,12 +126,14 @@ const ExhibitionPage: React.FC = () => {
         onNext={() => handleThumbnailClick(currentIteration + 1)}
         onPrev={() => handleThumbnailClick(currentIteration - 1)}
       >
-        <img
-          src={currentImage?.image_url || 'https://via.placeholder.com/500'}
-          alt={`Iteration ${currentIteration}`}
-          style={{ width: '100%', maxHeight: '80vh' }}
-        />
-        <p>{getDescription(currentImage?.description)}</p>
+        {currentImage ? (
+          <>
+            <img src={currentImage.image_url} alt={`Iteration ${currentIteration}`} style={{ width: '100%', maxHeight: '80vh' }} />
+            <p>{getDescription(currentImage.description)}</p>
+          </>
+        ) : (
+          <div>Waiting for images...</div>
+        )}
       </Modal>
     </>
   );

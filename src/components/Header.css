@@ -34,15 +34,15 @@
   }
   
   .navigation {
-    list-style: none;
+    list-style: decimal-leading-zero;
     display: flex;
     margin: 0;
-    padding: 0;
+    padding: 1.2rem 0 0 0rem;
     align-items: center;
   }
   
   .navigation li {
-    margin: 0 1rem;
+    margin: 0 2rem;
   }
   
   .navigation a {
@@ -88,7 +88,7 @@
     }
   
     .navigation li {
-      margin: 1rem 0;
+      margin: 1rem 1.2rem;
     }
   
     .close-menu-button {
