@@ -2,14 +2,23 @@
     background-color: var(--background-light);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Ensures the header content is centered */
     align-items: center;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 0; /* Reduced padding */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px; /* Ensures the header does not stretch too wide on larger screens */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; /* Padding on the sides for small screens */
 }
 
 .site-logo {
@@ -33,13 +42,30 @@
 }
 
 .navigation a {
-    color: var(--text-color); /* Using global variable for text color */
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .navigation a:hover, .navigation a:focus {
-    color: var(--primary-color); /* Bright blue for hover state, using global variable */
+    color: var(--primary-color);
     text-decoration: underline;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navigation {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navigation li {
+        padding: 8px 0; /* Increase vertical padding for touch targets */
+    }
 }
