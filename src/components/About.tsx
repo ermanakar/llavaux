@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import IntroductionSection from './IntroductionSection';
 import './About.css';
-import obelixImage from '/Users/ermanakar/Desktop/uxllava/uxllava/src/assets/profile.webp';
+import obelixImage from '../assets/profile.webp';
 import { FaPhoenixFramework, FaFingerprint, FaCat, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const AboutPage: React.FC = () => {

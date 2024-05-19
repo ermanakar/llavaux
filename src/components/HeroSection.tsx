@@ -6,9 +6,9 @@ import Subtitle from './Subtitle';
 import Wrapper from './Wrapper';
 import Button from './Button';  // Make sure import paths are correct
 
-import heroImage1 from '/Users/ermanakar/Desktop/uxllava/uxllava/src/assets/bg2.jpg';
-import heroImage2 from '/Users/ermanakar/Desktop/uxllava/uxllava/src/assets/bg1.jpg';
-import heroImage3 from '/Users/ermanakar/Desktop/uxllava/uxllava/src/assets/bg3.jpg';
+import heroImage1 from '../assets/bg2.jpg';
+import heroImage2 from '../assets/bg1.jpg';
+import heroImage3 from '../assets/bg3.jpg';
 
 const HeroSection = () => {
   const handleButtonClick = (url: string) => {  // Ensures URL is handled correctly

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '/Users/ermanakar/Desktop/uxllava/uxllava/src/assets/logo.svg'; // Adjust with the correct relative path
+import logo from '../assets/logo.svg'; // Adjust with the correct relative path
 import './Header.css';
 
 interface NavItem {
