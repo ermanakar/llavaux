@@ -1,65 +1,67 @@
-/* Contact.css */
 .contact-page {
-    max-width: 800px;
-    margin: 40px auto;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.contact-page h1 {
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.contact-page p {
+  color: var(--text-color);
+  margin-bottom: 30px;
+  font-size: 1.1em; /* Improved readability */
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.contact-form label {
+  align-self: flex-start;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em; /* Consistent and readable */
+}
+
+.contact-form button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1em; /* Consistent with input fields */
+}
+
+.contact-form button:hover {
+  background-color: var(--link-hover-color);
+}
+
+@media (max-width: 768px) {
+  .contact-page {
     padding: 20px;
-    text-align: center;
   }
-  
-  .contact-page h1 {
-    color: var(--text-color);
-    margin-bottom: 20px;
-  }
-  
-  .contact-page p {
-    color: var(--text-color);
-    margin-bottom: 30px;
-  }
-  
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-  
-  .contact-form label {
-    align-self: flex-start;
-    color: var(--text-color);
-  }
-  
+
   .contact-form input[type="text"],
   .contact-form input[type="email"],
   .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 90%; /* Slightly smaller on mobile to fit better */
   }
-  
-  .contact-form button {
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .contact-form button:hover {
-    background-color: var(--link-hover-color);
-  }
-  
-  @media (max-width: 768px) {
-    .contact-page {
-      padding: 20px;
-    }
-  
-    .contact-form input[type="text"],
-    .contact-form input[type="email"],
-    .contact-form textarea {
-      width: 90%; /* Slightly smaller on mobile to fit better */
-    }
-  }
-  
+}

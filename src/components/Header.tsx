@@ -11,7 +11,7 @@ const navigationItems: NavItem[] = [
   { path: "/", label: "Home" },
   { path: "/exhibition", label: "Exhibition" },
   { path: "/about", label: "About" },
-  { path: "/contact", label: "Contact" },
+  { path: "/resume", label: "Resume" },
 ];
 
 const Header: React.FC = () => {

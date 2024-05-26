@@ -4,6 +4,7 @@ import HeroSection from './HeroSection';
 import NewsUpdates from './NewsUpdates';
 import IntroductionSection from './IntroductionSection'; // Make sure the import path is correct
 import { FaHatWizard, FaPaintBrush, FaSearchDollar, FaRocket } from 'react-icons/fa';
+import SEO from './SEO';
 
 const HomePage: React.FC = () => {
   const events = [
@@ -35,6 +36,12 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      <SEO 
+        title="Home - Obelix's AI World"
+        description="Welcome to Obelix's AI World. Explore the amazing capabilities of AI through our exhibitions and projects."
+        keywords="AI, Obelix, AI world, AI exhibitions, AI projects"
+        author="Obelix"
+      />
       <Header />
       <HeroSection />
       <IntroductionSection events={events} />

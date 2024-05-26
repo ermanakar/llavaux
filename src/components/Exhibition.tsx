@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
 import Header from './Header';
 import Modal from './Modal';
+import SEO from './SEO';
 import './Exhibition.css';
 import classnames from 'classnames';
 
@@ -83,6 +84,12 @@ const ExhibitionPage: React.FC = () => {
 
   return (
     <>
+      <SEO 
+        title="Exhibition - AI Art by Obelix" 
+        description="Explore the AI-generated art exhibition by Obelix, showcasing the intersection of AI and human creativity."
+        keywords="AI art, AI exhibition, Obelix, AI creativity, AI and art"
+        author="Obelix"
+      />
       <Header />
       <main className="exhibition-page">
         <div

@@ -1,15 +1,15 @@
-// src/App.tsx
 import React from 'react';
-// In your component or App.js file
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import './App.css'; // Ensure you have this CSS file for styles
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import AboutPage from './components/About'; // Ensure this path is correct
-import ExhibitionPage from './components/Exhibition'; // Import the Exhibition page
-import Contact from './components/Contact'; // Import the Contact page
+import AboutPage from './components/About';
+import ExhibitionPage from './components/Exhibition';
+import Contact from './components/Contact';
+import ResumePage from './components/ResumePage'; // Import the Resume page
 import Footer from './components/Footer';
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -19,6 +19,7 @@ const App: React.FC = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/exhibition" element={<ExhibitionPage />} /> 
           <Route path="/contact" element={<Contact />} /> 
+          <Route path="/resume" element={<ResumePage />} /> {/* Add the new route */}
         </Routes>      
       </div>
       <Footer />
