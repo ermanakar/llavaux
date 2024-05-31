@@ -14,18 +14,19 @@ const Modal = ({ isOpen, onClose, children, onNext, onPrev }: ModalProps) => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'ArrowRight') onNext();
       if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'Escape') onClose();
     }
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onNext, onPrev]);
+  }, [isOpen, onClose, onNext, onPrev]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
+    <div className="modal-overlay open" onClick={onClose}>
+      <div className="modal-content open" onClick={e => e.stopPropagation()}>
         <button onClick={onClose} className="modal-close-button">Close</button>
         <button onClick={onPrev} className="modal-nav-button left">Prev</button>
         <button onClick={onNext} className="modal-nav-button right">Next</button>

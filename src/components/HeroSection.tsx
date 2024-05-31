@@ -4,15 +4,16 @@ import 'hero-slider/dist/index.css';
 import Title from './Title';
 import Subtitle from './Subtitle';
 import Wrapper from './Wrapper';
-import Button from './Button';  // Make sure import paths are correct
+import Button from './Button';
 
+// Ensure these paths are correct
 import heroImage1 from '../assets/bg2.jpg';
 import heroImage2 from '../assets/bg1.jpg';
 import heroImage3 from '../assets/bg3.jpg';
 
 const HeroSection = () => {
-  const handleButtonClick = (url: string) => {  // Ensures URL is handled correctly
-    window.location.href = url;  // Simple redirection
+  const handleButtonClick = (url: string) => {
+    window.location.href = url;
   };
 
   return (
@@ -39,7 +40,7 @@ const HeroSection = () => {
       <Slide background={{ backgroundImageSrc: heroImage2, backgroundAnimation: 'zoom' }}>
         <Wrapper>
           <Title>Meet the Artist</Title>
-          <Subtitle>Leave a note, join q&a's and send a message to the Mind behind the project.</Subtitle>
+          <Subtitle>Leave a note, join Q&A's and send a message to the mind behind the project.</Subtitle>
           <Button onClick={() => handleButtonClick('/contact')}>Contact</Button>
         </Wrapper>
       </Slide>

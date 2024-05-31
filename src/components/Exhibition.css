@@ -1,208 +1,217 @@
 /* General page styling */
 .exhibition-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-top: 60px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  box-sizing: border-box;
+  margin-top: 0;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.exhibition-page__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px);
+  opacity: 0.5;
+  z-index: -1;  /* Ensure it is behind everything */
+}
+
+.exhibition-page__image-stage {
+  width: 100%;
+  height: calc(100vh - 50px); /* Ensure it doesn't overlap */
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.exhibition-page__image-stage img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;  /* Center horizontally */
+}
+
+.exhibition-page__image-description {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  margin: 0;
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 60px;  /* Ensure it's above the slider container */
+  width: 90%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 2;  /* Ensure it's above the slider container */
+}
+
+.exhibition-page__image-description:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.exhibition-page__read-more {
+  color: #ffcc00;
+  margin-left: 10px;
+}
+
+.exhibition-page__iteration-number {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9em;
+  z-index: 2;  /* Ensure it's above the image */
+}
+
+.exhibition-page__slider-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1;  /* Ensure it's below the image description */
+  gap: 5px; 
+}
+
+.exhibition-page__thumbnail {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
+  border: 3px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.exhibition-page__thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exhibition-page__thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.exhibition-page__thumbnail--active {
+  border-color: #007bff;
+}
+
+.exhibition-page__waiting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #888;
+  font-size: 1.2em;
+}
+
+@media (max-width: 768px) {
   .exhibition-page__image-stage {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    box-shadow: var(--shadow);
-    position: relative;
-    cursor: pointer;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
+    height: calc(100vh - 50px); /* Ensure it doesn't overlap */
   }
-  
-  .exhibition-page__image-stage:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
+
   .exhibition-page__image-stage img {
+    min-height: 100vh;
+    object-fit: cover;
+  }
+
+  .exhibition-page__slider-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 5px;
+    box-sizing: border-box;
+    transform: translateY(100px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 10;
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
   }
-  
-  .exhibition-page__image-stage:hover img {
-    transform: scale(1.03);
+
+  .exhibition-page__thumbnail img {
+    width: 60px;
   }
-  
+
+  .exhibition-page__thumbnail {
+    width: 60px;
+    flex: 0 0 60px;
+    padding: 5px;
+  }
+
   .exhibition-page__image-description {
     background: rgba(0, 0, 0, 0.7);
     color: white;
     margin: 0;
     padding: 10px 20px;
     position: absolute;
-    bottom: 0;
-    width: 100%;
+    bottom: 60px;  /* Ensure it's above the slider container */
+    width: 90%;
     box-sizing: border-box;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .exhibition-page__image-description:hover {
-    background: rgba(0, 0, 0, 0.9);
-  }
-  
-  .exhibition-page__read-more {
-    color: #ffcc00;
-    margin-left: 10px;
+    z-index: 2;  /* Ensure it's above the slider container */
   }
   
   .exhibition-page__iteration-number {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.9em;
+    font-size: 12px;
+    padding: 4px 8px;
+    top: 5px;
+    right: 5px;
   }
-  
-  .exhibition-page__slider-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    padding: 20px 0;
-    max-width: 800px;
-    margin: 10px auto;
-    overflow-x: auto;
+
+  .exhibition-page__slider-container.active {
+    transform: translateY(0);
   }
-  
-  .exhibition-page__thumbnail {
-    border: 3px solid transparent;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: transform 0.2s ease;
-    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .exhibition-page__image-stage {
+    margin-top: -60px;
   }
-  
+
+  .exhibition-page__image-description {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
   .exhibition-page__thumbnail img {
-    display: block;
-    width: 100px;
-    height: auto;
-    transition: opacity 0.3s ease;
+    width: 50px;
   }
-  
-  .exhibition-page__thumbnail:hover {
-    transform: translateY(-5px);
+
+  .exhibition-page__thumbnail {
+    width: 50px;
+    flex: 0 0 50px;
+    margin: 2px;
   }
-  
-  .exhibition-page__thumbnail--active {
-    border-color: #007bff;
+
+  .exhibition-page__iteration-number {
+    font-size: 10px;
+    padding: 3px 6px;
   }
-  
-  .exhibition-page__waiting {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 500px;
-    background: #f0f0f0;
-    color: #888;
-    font-size: 1.2em;
-  }
-  
-  @media (max-width: 768px) {
-    .exhibition-page__image-stage {
-      width: 100%;
-      max-width: 100%;
-      margin-top: -80px;
-      height: 100vh;
-      max-height: 100vh;
-      border-radius: 0;
-    }
-  
-    .exhibition-page__image-stage img {
-      min-height: 100vh;
-      object-fit: cover;
-    }
-  
-    .exhibition-page {
-      margin-top: 0;
-      padding: 0;
-    }
-  
-    .exhibition-page__slider-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 10px 5px;
-        box-sizing: border-box;
-        transform: translateY(100px);
-        transition: transform 0.3s ease-in-out;
-        z-index: 10;
-        display: flex;
-        overflow-x: auto;
-        gap: 5px;
-      }
-    
-      .exhibition-page__thumbnail img {
-        width: 60px;
-      }
-    
-      .exhibition-page__thumbnail {
-        width: 60px;
-        flex: 0 0 60px;
-        padding: 5px;
-      }
-    
-      .exhibition-page__image-description {
-        font-size: 14px;
-        padding: 8px 16px;
-        position: absolute;
-        bottom: 0;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.8);
-        transition: opacity 0.3s ease;
-      }
-    
-      .exhibition-page__iteration-number {
-        font-size: 12px;
-        padding: 4px 8px;
-        top: 5px;
-        right: 5px;
-      }
-    
-      .exhibition-page__slider-container.active {
-        transform: translateY(0);
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .exhibition-page__image-stage {
-        margin-top: -60px;
-      }
-    
-      .exhibition-page__image-description {
-        font-size: 12px;
-        padding: 6px 12px;
-      }
-    
-      .exhibition-page__thumbnail img {
-        width: 50px;
-      }
-    
-      .exhibition-page__thumbnail {
-        width: 50px;
-        flex: 0 0 50px;
-        margin: 2px;
-      }
-    
-      .exhibition-page__iteration-number {
-        font-size: 10px;
-        padding: 3px 6px;
-      }
-    }
+}

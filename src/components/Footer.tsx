@@ -11,7 +11,12 @@ const Footer: React.FC = () => {
         {/* Add social media links */}
       </div>
       <div className="legal">
-        <p>Terms of Service | Privacy Policy</p>
+        <p>
+          Terms of Service |{' '}
+          <a href="http://34.90.128.136:5001" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </a>
+        </p>
       </div>
     </footer>
   );

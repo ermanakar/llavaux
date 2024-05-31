@@ -3,6 +3,7 @@ import io, { Socket } from 'socket.io-client';
 import Header from './Header';
 import Modal from './Modal';
 import SEO from './SEO';
+import Poem from './Poem';
 import './Exhibition.css';
 import classnames from 'classnames';
 
@@ -92,6 +93,12 @@ const ExhibitionPage: React.FC = () => {
       />
       <Header />
       <main className="exhibition-page">
+        {currentImage && (
+          <div
+            className="exhibition-page__background"
+            style={{ backgroundImage: `url(${currentImage.image_url})` }}
+          />
+        )}
         <div
           className="exhibition-page__image-stage"
           onClick={toggleThumbnailPanel}
@@ -116,7 +123,7 @@ const ExhibitionPage: React.FC = () => {
             </>
           ) : (
             <div className="exhibition-page__waiting">
-              Waiting for images...
+              <p>Loading the visual experience...</p>
             </div>
           )}
         </div>
@@ -127,6 +134,7 @@ const ExhibitionPage: React.FC = () => {
           {images.map(renderThumbnail)}
         </div>
       </main>
+      <Poem />
       <Modal
         isOpen={modalIsOpen}
         onClose={() => setModalIsOpen(false)}

@@ -5,6 +5,7 @@ import './Header.css';
 interface NavItem {
   path: string;
   label: string;
+  external?: boolean;
 }
 
 const navigationItems: NavItem[] = [
@@ -12,6 +13,7 @@ const navigationItems: NavItem[] = [
   { path: "/exhibition", label: "Exhibition" },
   { path: "/about", label: "About" },
   { path: "/resume", label: "Resume" },
+  { path: "https://radyokafa.substack.com", label: "Blog", external: true },
 ];
 
 const Header: React.FC = () => {
@@ -43,9 +45,15 @@ const Header: React.FC = () => {
           <li className="close-menu-button" onClick={closeMenu}>
             ✕
           </li>
-          {navigationItems.map(({ path, label }) => (
+          {navigationItems.map(({ path, label, external }) => (
             <li key={path}>
-              <a href={path} onClick={closeMenu}>{label}</a>
+              {external ? (
+                <a href={path} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                  {label}
+                </a>
+              ) : (
+                <a href={path} onClick={closeMenu}>{label}</a>
+              )}
             </li>
           ))}
         </ul>

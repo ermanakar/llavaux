@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Header from './Header';
-import HeroSection from './HeroSection';
-import NewsUpdates from './NewsUpdates';
-import IntroductionSection from './IntroductionSection'; // Make sure the import path is correct
-import { FaHatWizard, FaPaintBrush, FaSearchDollar, FaRocket } from 'react-icons/fa';
 import SEO from './SEO';
+
+// Importing icons
+import { FaHatWizard, FaPaintBrush, FaSearchDollar, FaRocket } from 'react-icons/fa';
+
+// Dynamic imports for components
+const HeroSection = lazy(() => import('./HeroSection'));
+const IntroductionSection = lazy(() => import('./IntroductionSection'));
+const NewsUpdates = lazy(() => import('./NewsUpdates'));
 
 const HomePage: React.FC = () => {
   const events = [
@@ -43,9 +47,11 @@ const HomePage: React.FC = () => {
         author="Obelix"
       />
       <Header />
-      <HeroSection />
-      <IntroductionSection events={events} />
-      <NewsUpdates />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HeroSection />
+        <IntroductionSection events={events} />
+        <NewsUpdates />
+      </Suspense>
     </>
   );
 };

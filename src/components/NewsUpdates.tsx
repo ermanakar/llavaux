@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewsUpdates.css'; // Ensure this path is correct
+import './NewsUpdates.css';
 
 const NewsUpdates: React.FC = () => {
   const updates = [
