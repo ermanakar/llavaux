@@ -9,6 +9,7 @@
   position: relative;
   height: 100vh;
   overflow: hidden;
+  background-color: #f8f9fa;
 }
 
 .exhibition-page__background {
@@ -21,12 +22,12 @@
   background-position: center;
   filter: blur(20px);
   opacity: 0.5;
-  z-index: -1;  /* Ensure it is behind everything */
+  z-index: -1;
 }
 
 .exhibition-page__image-stage {
   width: 100%;
-  height: calc(100vh - 50px); /* Ensure it doesn't overlap */
+  height: calc(100vh - 50px);
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -39,7 +40,7 @@
   max-height: 90vh;
   object-fit: contain;
   display: block;
-  margin: 0 auto;  /* Center horizontally */
+  margin: 0 auto;
 }
 
 .exhibition-page__image-description {
@@ -48,12 +49,13 @@
   margin: 0;
   padding: 10px 20px;
   position: absolute;
-  bottom: 60px;  /* Ensure it's above the slider container */
+  bottom: 60px;
   width: 90%;
   box-sizing: border-box;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  z-index: 2;  /* Ensure it's above the slider container */
+  z-index: 2;
+  border-radius: 8px;
 }
 
 .exhibition-page__image-description:hover {
@@ -63,18 +65,8 @@
 .exhibition-page__read-more {
   color: #ffcc00;
   margin-left: 10px;
-}
-
-.exhibition-page__iteration-number {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.9em;
-  z-index: 2;  /* Ensure it's above the image */
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .exhibition-page__slider-container {
@@ -85,8 +77,10 @@
   bottom: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 1;  /* Ensure it's below the image description */
-  gap: 5px; 
+  z-index: 1;
+  gap: 5px;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 8px;
 }
 
 .exhibition-page__thumbnail {
@@ -99,6 +93,7 @@
   transition: transform 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
   margin: 0 5px;
+  position: relative;
 }
 
 .exhibition-page__thumbnail img {
@@ -116,6 +111,18 @@
   border-color: #007bff;
 }
 
+.exhibition-page__thumbnail-iteration-number {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.7em;
+  z-index: 2;
+}
+
 .exhibition-page__waiting {
   display: flex;
   align-items: center;
@@ -127,10 +134,11 @@
   font-size: 1.2em;
 }
 
+/* Mobile styles */
 @media (max-width: 768px) {
   .exhibition-page__image-stage {
     width: 100%;
-    height: calc(100vh - 50px); /* Ensure it doesn't overlap */
+    height: calc(100vh - 50px);
   }
 
   .exhibition-page__image-stage img {
@@ -170,19 +178,12 @@
     margin: 0;
     padding: 10px 20px;
     position: absolute;
-    bottom: 60px;  /* Ensure it's above the slider container */
+    bottom: 60px;
     width: 90%;
     box-sizing: border-box;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    z-index: 2;  /* Ensure it's above the slider container */
-  }
-  
-  .exhibition-page__iteration-number {
-    font-size: 12px;
-    padding: 4px 8px;
-    top: 5px;
-    right: 5px;
+    z-index: 2;
   }
 
   .exhibition-page__slider-container.active {
@@ -208,10 +209,5 @@
     width: 50px;
     flex: 0 0 50px;
     margin: 2px;
-  }
-
-  .exhibition-page__iteration-number {
-    font-size: 10px;
-    padding: 3px 6px;
   }
 }

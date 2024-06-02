@@ -1,156 +1,157 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io, { Socket } from 'socket.io-client';
 import Header from './Header';
-import Modal from './Modal';
-import SEO from './SEO';
-import Poem from './Poem';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import './Exhibition.css';
 import classnames from 'classnames';
 
 type ImageData = {
-  iteration: number;
+  iteration_number: number;
   image_url: string;
   description: string;
+  revised_prompt: string;
+  timestamp: string;
 };
 
 const ExhibitionPage: React.FC = () => {
   const [images, setImages] = useState<ImageData[]>([]);
-  const [currentIteration, setCurrentIteration] = useState(1);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentIterationIndex, setCurrentIterationIndex] = useState<number>(-1);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [isThumbnailPanelOpen, setIsThumbnailPanelOpen] = useState(false);
   const socket = useRef<Socket | null>(null);
+  const imagesRef = useRef<ImageData[]>([]);
+  const SWIPE_THRESHOLD = 50;
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
-  const swipeThreshold = 50;
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  useEffect(() => {
+    fetch('/api/images')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Fetched data:', data);
+        if (data.length > 0) {
+          setImages(data);
+          setCurrentIterationIndex(data.length - 1);
+          imagesRef.current = data;
+        }
+      })
+      .catch((error) => console.error('Error fetching images:', error));
+  }, []);
 
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SOCKET_URL || 'http://localhost:5001');
     socket.current.on('update_image', (data: ImageData) => {
-      setImages((prevImages) => [...prevImages, data]);
-      setCurrentIteration(data.iteration);
+      console.log('Received socket update:', data);
+      setImages((prevImages) => {
+        const imageExists = prevImages.some(image => image.image_url === data.image_url);
+        if (!imageExists) {
+          const newImages = [...prevImages, data];
+          imagesRef.current = newImages;
+          setCurrentIterationIndex(newImages.length - 1);
+          return newImages;
+        }
+        return prevImages;
+      });
     });
 
     return () => {
-      socket.current?.disconnect();
+      if (socket.current) {
+        socket.current.disconnect();
+      }
     };
   }, []);
 
-  const handleThumbnailClick = (iteration: number) => {
-    if (iteration > 0 && iteration <= images.length) {
-      setCurrentIteration(iteration);
-      setIsThumbnailPanelOpen(false);
-    }
+  const handleThumbnailClick = (index: number) => {
+    setCurrentIterationIndex(index);
+    setIsThumbnailPanelOpen(false);
   };
 
   const toggleDescription = () => setIsDescriptionExpanded((prev) => !prev);
   const toggleThumbnailPanel = () => setIsThumbnailPanelOpen((prev) => !prev);
 
   const getDescription = (description?: string) => {
-    if (!description) return 'No description available';
-    return isDescriptionExpanded || description.length <= 150
-      ? description
-      : `${description.substring(0, 150)}...`;
+    if (!description) return 'No description available.';
+    return isDescriptionExpanded ? description : `${description.substring(0, 100)}...`;
   };
 
-  const handleSwipe = (direction: 'left' | 'right') => {
-    if (direction === 'left' && currentIteration < images.length) {
-      handleThumbnailClick(currentIteration + 1);
-    } else if (direction === 'right' && currentIteration > 1) {
-      handleThumbnailClick(currentIteration - 1);
+  const handleTouchStart = (event: React.TouchEvent) => {
+    setTouchStart(event.touches[0].clientX);
+  };
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    if (!touchStart) return;
+    const touchEnd = event.touches[0].clientX;
+    const distance = touchStart - touchEnd;
+    if (distance > SWIPE_THRESHOLD) {
+      handleNextIteration();
+    } else if (distance < -SWIPE_THRESHOLD) {
+      handlePreviousIteration();
     }
   };
 
-  const onTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
-  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
-  const onTouchEnd = () => {
-    if (touchStart - touchEnd > swipeThreshold) handleSwipe('left');
-    else if (touchEnd - touchStart > swipeThreshold) handleSwipe('right');
+  const handleTouchEnd = () => {
+    setTouchStart(null);
   };
 
-  const renderThumbnail = (img: ImageData) => (
-    <button
-      key={img.iteration}
-      className={classnames('exhibition-page__thumbnail', {
-        'exhibition-page__thumbnail--active': img.iteration === currentIteration,
-      })}
-      onClick={() => handleThumbnailClick(img.iteration)}
-    >
-      <img src={img.image_url} alt={`Thumbnail of iteration ${img.iteration}`} />
-    </button>
-  );
+  const handleNextIteration = () => {
+    if (currentIterationIndex < images.length - 1) {
+      setCurrentIterationIndex((prev) => prev + 1);
+    }
+  };
 
-  const currentImage = images.find((img) => img.iteration === currentIteration);
+  const handlePreviousIteration = () => {
+    if (currentIterationIndex > 0) {
+      setCurrentIterationIndex((prev) => prev - 1);
+    }
+  };
+
+  const currentImage = images[currentIterationIndex];
 
   return (
-    <>
-      <SEO 
-        title="Exhibition - AI Art by Obelix" 
-        description="Explore the AI-generated art exhibition by Obelix, showcasing the intersection of AI and human creativity."
-        keywords="AI art, AI exhibition, Obelix, AI creativity, AI and art"
-        author="Obelix"
-      />
+    <HelmetProvider>
+      <Helmet>
+        <title>Exhibition Page</title>
+      </Helmet>
       <Header />
-      <main className="exhibition-page">
+      <div className="exhibition-page">
         {currentImage && (
           <div
             className="exhibition-page__background"
             style={{ backgroundImage: `url(${currentImage.image_url})` }}
           />
         )}
-        <div
-          className="exhibition-page__image-stage"
-          onClick={toggleThumbnailPanel}
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
+        <div className="exhibition-page__image-stage"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}>
           {currentImage ? (
             <>
-              <img src={currentImage.image_url} alt={`Iteration ${currentIteration}`} />
+              <img src={currentImage.image_url} alt={`Iteration ${currentImage.iteration_number}`} />
               <div className="exhibition-page__image-description" onClick={toggleDescription}>
-                {getDescription(currentImage.description)}
-                {currentImage.description.length > 150 && (
-                  <span className="exhibition-page__read-more">
-                    {isDescriptionExpanded ? 'Read less' : 'Read more'}
-                  </span>
-                )}
-              </div>
-              <div className="exhibition-page__iteration-number">
-                Iteration: {currentIteration}
+                <p>{getDescription(currentImage.description)}</p>
               </div>
             </>
           ) : (
-            <div className="exhibition-page__waiting">
-              <p>Loading the visual experience...</p>
-            </div>
+            <div className="exhibition-page__waiting">Loading...</div>
           )}
         </div>
-        <div
-          className={classnames('exhibition-page__slider-container', { active: isThumbnailPanelOpen })}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {images.map(renderThumbnail)}
+        <div className={classnames('exhibition-page__slider-container', { 'active': isThumbnailPanelOpen })}>
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={classnames('exhibition-page__thumbnail', { 'exhibition-page__thumbnail--active': index === currentIterationIndex })}
+              onClick={() => handleThumbnailClick(index)}>
+              <img src={image.image_url} alt={`Iteration ${image.iteration_number}`} />
+              <div className="exhibition-page__thumbnail-iteration-number">
+                {image.iteration_number}
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-      <Poem />
-      <Modal
-        isOpen={modalIsOpen}
-        onClose={() => setModalIsOpen(false)}
-        onNext={() => handleThumbnailClick(currentIteration + 1)}
-        onPrev={() => handleThumbnailClick(currentIteration - 1)}
-      >
-        {currentImage ? (
-          <>
-            <img src={currentImage.image_url} alt={`Iteration ${currentIteration}`} style={{ width: '100%', maxHeight: '80vh' }} />
-            <p>{getDescription(currentImage.description)}</p>
-          </>
-        ) : (
-          <div>Waiting for images...</div>
-        )}
-      </Modal>
-    </>
+        <button className="exhibition-page__read-more" onClick={toggleThumbnailPanel}>
+          {isThumbnailPanelOpen ? 'Close Thumbnails' : 'Show Thumbnails'}
+        </button>
+      </div>
+    </HelmetProvider>
   );
 };
 

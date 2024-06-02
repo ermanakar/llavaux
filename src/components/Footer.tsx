@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
       <div className="legal">
         <p>
           Terms of Service |{' '}
-          <a href="http://34.90.128.136:5001" target="_blank" rel="noopener noreferrer">
+          <a href="http://35.214.214.52:5001" target="_blank" rel="noopener noreferrer">
             Privacy Policy
           </a>
         </p>
