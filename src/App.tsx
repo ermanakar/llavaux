@@ -11,6 +11,7 @@ const ExhibitionPage = lazy(() => import('./components/Exhibition'));
 const Contact = lazy(() => import('./components/Contact'));
 const ResumePage = lazy(() => import('./components/ResumePage'));
 const Footer = lazy(() => import('./components/Footer'));
+const ImageSearch = lazy(() => import('./components/ImageSearch')); // Importing the new ImageSearch component
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <Route path="/exhibition" element={<ExhibitionPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/resume" element={<ResumePage />} />
+            <Route path="/search" element={<ImageSearch />} /> 
           </Routes>
           <Footer />
         </Suspense>
